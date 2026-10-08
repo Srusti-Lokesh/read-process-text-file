@@ -1,0 +1,3 @@
+Python makes file processing simple.
+This sample contains three lines.
+It is useful for testing the text statistics application.

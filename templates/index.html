@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Text File Statistics</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <main class="container">
+        <section class="hero">
+            <p class="eyebrow">PYTHON • FILE HANDLING • TEXT PROCESSING</p>
+            <h1>Read &amp; Process a Text File</h1>
+            <p class="subtitle">
+                Upload a UTF-8 text file and generate line, word, and character statistics.
+            </p>
+        </section>
+
+        <section class="card">
+            <form action="{{ url_for('analyze') }}" method="post" enctype="multipart/form-data">
+                <label for="file">Choose a .txt file</label>
+                <input id="file" name="file" type="file" accept=".txt,text/plain" required>
+                <button type="submit">Analyze File</button>
+                <p class="hint">Maximum file size: 10 MB • UTF-8 text files only</p>
+            </form>
+        </section>
+
+        {% if error %}
+        <section class="card error" role="alert">
+            <strong>Unable to process file:</strong> {{ error }}
+        </section>
+        {% endif %}
+
+        {% if result %}
+        <section class="card result">
+            <div class="result-heading">
+                <div>
+                    <p class="eyebrow">ANALYSIS COMPLETE</p>
+                    <h2>{{ result.filename }}</h2>
+                </div>
+                <a class="secondary" href="{{ url_for('index') }}">Analyze another</a>
+            </div>
+
+            <div class="stats">
+                <article>
+                    <span>Lines</span>
+                    <strong>{{ result.line_count }}</strong>
+                </article>
+                <article>
+                    <span>Words</span>
+                    <strong>{{ result.word_count }}</strong>
+                </article>
+                <article>
+                    <span>Characters</span>
+                    <strong>{{ result.character_count }}</strong>
+                </article>
+            </div>
+
+            <p class="definition">
+                Character count excludes newline characters. Words are counted using
+                Python whitespace splitting.
+            </p>
+        </section>
+        {% endif %}
+
+        <footer>
+            <p>Built with Python, Flask, HTML and CSS.</p>
+            <a href="{{ url_for('health') }}">Health check</a>
+        </footer>
+    </main>
+</body>
+</html>
